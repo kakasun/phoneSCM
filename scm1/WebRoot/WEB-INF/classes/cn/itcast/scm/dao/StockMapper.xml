@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.scm.dao.StockMapper" >
+  <resultMap id="StockResultMap" type="cn.itcast.scm.entity.Stock" >
+    <id column="stock_id" property="stockId" jdbcType="VARCHAR" />
+    <result column="sh_id" property="shId" jdbcType="VARCHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+    <result column="stock_firstdate" property="stockFirstdate" jdbcType="DATE" />
+    <result column="stock_lastdate" property="stockLastdate" jdbcType="DATE" />
+    <result column="stock_amount" property="stockAmount" jdbcType="INTEGER" />
+    <result column="stock_price" property="stockPrice" jdbcType="DECIMAL" />
+  </resultMap>
+<select id="selectPageListUseDyc"  parameterType="page" resultMap="StockResultMap">
+	select *
+	from stock
+	<where>
+		<if test="paramEntity.stockId != null">and stock_id like #{paramEntity.stockId}</if>
+		<if test="paramEntity.goodsId != null">and goods_id like #{paramEntity.goodsId}</if>
+	</where>
+	limit #{start},#{rows}
+
+</select>
+
+<select id="selectPageCountUseDyc"  parameterType="page" resultType="Integer">
+	select count(1)
+	from stock
+	<where>
+		<if test="paramEntity.stockId != null">and stock_id like #{paramEntity.stockId}</if>
+		<if test="paramEntity.goodsId != null">and goods_id like #{paramEntity.goodsId}</if>
+	</where>
+	
+
+</select>
+
+</mapper>

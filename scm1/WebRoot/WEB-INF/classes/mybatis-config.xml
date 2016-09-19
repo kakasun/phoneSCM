@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+
+<configuration>
+	
+	
+	<!-- 
+       <typeAliases>
+       	<typeAlias type="cn.itcast.scm.entity.Dept" alias="Dept"/>
+       </typeAliases>	
+	
+	<environments default="oracle_developer">
+		<environment id="mysql_developer">
+			<transactionManager type="jdbc"/>	
+			<dataSource type="pooled">
+				<property name="driver" value="com.mysql.jdbc.Driver"/>
+				<property name="url" value="jdbc:mysql://127.0.0.1:3306/mybatis"/>
+				<property name="username" value="root"/>
+				<property name="password" value="root"/>
+			</dataSource>
+		</environment>
+		<environment id="oracle_developer">
+			<transactionManager type="jdbc"/>	
+			<dataSource type="pooled">
+				<property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+				<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:orcl"/>
+				<property name="username" value="scott"/>
+				<property name="password" value="tiger"/>
+			</dataSource>
+		</environment>
+	</environments>
+ 
+
+
+
+	<mappers>
+		<mapper resource="cn/itcast/scm/entity/DeptMapper.xml"/>
+	</mappers>
+-->		
+	<!-- 通过package, 可以直接指定package的名字， mybatis会自动扫描你指定包下面的javabean,
+      并且默认设置一个别名，默认的名字为： javabean 的首字母小写的非限定类名来作为它的别名。
+      也可在javabean 加上注解@Alias 来自定义别名， 例如： @Alias(user)  -->
+      
+       <typeAliases>
+       	<package name="cn.itcast.scm.entity"/>
+       </typeAliases>
+      
+	
+
+</configuration>

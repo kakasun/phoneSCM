@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.scm.dao.StoreHouseMapper" >
+  <resultMap id="StoreHouseResultMap" type="cn.itcast.scm.entity.StoreHouse" >
+    <id column="sh_id" property="shId" jdbcType="VARCHAR" />
+    <result column="sh_name" property="shName" jdbcType="VARCHAR" />
+    <result column="sh_responsible" property="shResponsible" jdbcType="VARCHAR" />
+    <result column="sh_phone" property="shPhone" jdbcType="VARCHAR" />
+    <result column="sh_address" property="shAddress" jdbcType="VARCHAR" />
+    <result column="sh_type" property="shType" jdbcType="VARCHAR" />
+    <result column="sh_remark" property="shRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <update id="updateByPk">
+  	update store_house set
+  	sh_id=#{shId},sh_name=#{shName},sh_responsible=#{shResponsible},sh_phone=#{shPhone},
+  	sh_address=#{shAddress},sh_type=#{shType},sh_remark=#{shRemark}
+  	where sh_id=#{shId}
+  </update>
+  
+  <insert id="insert" parameterType="StoreHouse">
+  	insert into store_house(sh_id,sh_name,sh_responsible,sh_phone,sh_address,sh_type,sh_remark)
+  	values(#{shId},#{shName},#{shResponsible},#{shPhone},#{shAddress},#{shType},#{shRemark})
+  
+  </insert>
+  
+  <delete id="deleteList" >
+  	delete from store_house where sh_id in
+  	<foreach collection="array" open="(" close=")" separator="," item="shk">
+  		#{shk}
+  	</foreach>
+  
+  </delete>
+  
+  <select id="selectUseDyc" resultMap="StoreHouseResultMap" resultType="StoreHouse">
+  	select * 
+  	from store_house
+  </select>
+  
+    <!-- 多条件查询-->
+  <select id="selectPageListUseDyc" parameterType="Page" resultMap="StoreHouseResultMap" >
+  	select *
+  	from store_house
+  	<where>
+  		<if test="paramEntity.shName != null">and sh_name like #{paramEntity.shName}</if>
+  		<if test="paramEntity.shAddress != null">and sh_address like #{paramEntity.shAddress}</if>
+  	</where>
+  	limit #{start},#{rows}
+  
+  </select>
+  
+    <select id="selectPageCountUseDyc" parameterType="Page" resultType="Integer">
+  	select count(1)
+  	from store_house
+  	<where>
+  		<if test="paramEntity.shName != null">and sh_name like #{paramEntity.shName}</if>
+  		<if test="paramEntity.shAddress != null">and sh_address like #{paramEntity.shAddress}</if>
+  	</where>
+  	
+  
+  </select>
+  
+  
+</mapper>

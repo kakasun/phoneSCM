@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itcast.scm.dao.SupplierMapper">
+
+  <resultMap id="SupplierResultMap" type="cn.itcast.scm.entity.Supplier">
+    <id column="sup_id" jdbcType="INTEGER" property="supId" />
+    <result column="sup_name" jdbcType="VARCHAR" property="supName" />
+    <result column="sup_linkman" jdbcType="VARCHAR" property="supLinkman" />
+    <result column="sup_phone" jdbcType="VARCHAR" property="supPhone" />
+    <result column="sup_address" jdbcType="VARCHAR" property="supAddress" />
+    <result column="sup_remark" jdbcType="VARCHAR" property="supRemark" />
+    <result column="sup_pay" jdbcType="DECIMAL" property="supPay" />
+    <result column="sup_type" jdbcType="VARCHAR" property="supType" />
+  </resultMap>
+  
+  <update id="updateByPk">
+  	update supplier set sup_id=#{supId},sup_name=#{supName},sup_linkman=#{supLinkman},sup_phone=#{supPhone},
+  	sup_address=#{supAddress},sup_remark=#{supRemark},sup_pay=#{supPay},sup_type=#{supType}
+  	where sup_id=#{supId}
+  </update>
+
+  <insert id="insert" parameterType="Supplier">
+  	insert into supplier (sup_id,sup_name,sup_address,sup_linkman,sup_phone,sup_remark,sup_pay,sup_type) 
+  	values(#{supId},#{supName},#{supAddress},#{supLinkman},#{supPhone},#{supRemark},#{supPay},#{supType})
+  </insert>
+  
+  <select id="selectUseDyc" resultMap="SupplierResultMap" resultType="Supplier">
+  	select * 
+  	from supplier
+  </select>
+  
+  <select id="selectPage" parameterType="Page" resultMap="SupplierResultMap" >
+  	select *
+  	from supplier
+  	where  sup_name like #{keyWord}
+  	limit #{start},#{rows}
+  
+  </select>
+  
+    <select id="selectCountPage" parameterType="Page"  resultType="Integer">
+  	select count(1)
+  	from supplier
+    where sup_name like #{keyWord}
+  </select>
+  <!-- 多条件查询-->
+  <select id="selectPageListUseDyc" parameterType="Page" resultMap="SupplierResultMap" >
+  	select *
+  	from supplier
+  	<where>
+  		<if test="paramEntity.supName != null">and sup_name like #{paramEntity.supName}</if>
+  		<if test="paramEntity.supAddress != null">and sup_address like #{paramEntity.supAddress}</if>
+  	</where>
+  	limit #{start},#{rows}
+  
+  </select>
+  
+    <select id="selectPageCountUseDyc" parameterType="Page" resultType="Integer">
+  	select count(1)
+  	from supplier
+  	<where>
+  		<if test="paramEntity.supName != null">and sup_name like #{paramEntity.supName}</if>
+  		<if test="paramEntity.supAddress != null">and sup_address like #{paramEntity.supAddress}</if>
+  	</where>
+  </select>
+  
+  <!-- 删除 -->
+  <delete id="deleteList">
+  
+  	delete from supplier where sup_id in
+  	<foreach collection="array" open="(" close=")" separator=","  item="pk">
+  		#{pk}
+  	</foreach>
+  
+  </delete>
+  
+</mapper>

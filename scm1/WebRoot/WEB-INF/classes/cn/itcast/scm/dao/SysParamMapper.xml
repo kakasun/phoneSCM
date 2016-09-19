@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.scm.dao.SysParamMapper" >
+  <resultMap id="SysParamResultMap" type="cn.itcast.scm.entity.SysParam" >
+    <id column="sys_param_id" property="sysParamId" jdbcType="BIGINT" />
+    <result column="sys_param_field" property="sysParamField" jdbcType="VARCHAR" />
+    <result column="sys_param_value" property="sysParamValue" jdbcType="VARCHAR" />
+    <result column="sys_param_text" property="sysParamText" jdbcType="VARCHAR" />
+    <result column="sys_param_type" property="sysParamType" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectList" resultMap="SysParamResultMap" parameterType="String" >
+    select *
+    from sys_param
+   
+  </select>
+  <!-- 使用${value}格式，允许sql语句作为参数执行 -->
+  <select id="selectOtherTable" parameterType="string" resultMap="SysParamResultMap">
+  	${value}
+  </select>
+ 
+
+ 
+</mapper>
